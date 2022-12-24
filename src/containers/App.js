@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import CardList from './CardList';
-import SearchBox from './SearchBox';
-import Scroll from './Scroll';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
 import './App.css';
 
 /**
- * Just a note. App is a smart component. // ! Has State.
+ * Just a note. App is a smart component - // ! Has State.
  * SearchBox and CardList are pure functions. Given the same input they will always have the same output.
  */
 class App extends Component {
@@ -20,19 +20,20 @@ class App extends Component {
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
-            .then(users => this.setState({ robots: users }))
+            .then(users => this.setState({ robots: users }));
     }
 
 
     onSearchChange = (event) => {
-        this.setState({ searchField: event.target.value })
+        this.setState({ searchField: event.target.value });
     }
 
     render() {
-        const filteredBots = this.state.robots.filter(robots => {
-            return robots.name.toLowerCase().includes(this.state.searchField.toLowerCase())
-                || robots.email.toLowerCase().includes(this.state.searchField.toLowerCase())
-        })
+        const { robots, searchField } = this.state;
+        const filteredBots = robots.filter(robot => {
+            return robot.name.toLowerCase().includes(searchField.toLowerCase())
+                || robot.email.toLowerCase().includes(searchField.toLowerCase())
+        });
         return (
             <div className="tc">
                 <h1 className="f1">RoboFriends</h1>
